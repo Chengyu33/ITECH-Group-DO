@@ -1,0 +1,5 @@
+asgiref @ file:///C:/Users/task_177184284901300/croot/asgiref_1771842965518/work
+Django @ file:///C:/miniconda3/conda-bld/django_1764329306110/work
+packaging @ file:///C:/miniconda3/conda-bld/packaging_1761049096285/work
+pillow @ file:///C:/b/abs_b50vowcrzo/croot/pillow_1738010273782/work
+sqlparse @ file:///C:/miniconda3/conda-bld/sqlparse_1764240091927/work
