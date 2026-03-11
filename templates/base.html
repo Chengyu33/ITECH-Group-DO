@@ -9,9 +9,37 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Event Hub</a>
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+                🎉 Event Hub
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Tickets</a>
+                    </li>
+                </ul>
+
+                <form class="d-flex me-3">
+                    <input class="form-control me-2 rounded-pill" type="search" placeholder="Search events...">
+                    <button class="btn btn-outline-light rounded-pill" type="submit">Search</button>
+                </form>
+
+                <div class="d-flex">
+                    <a href="{% url 'login' %}" class="btn btn-primary rounded-pill fw-bold">Sign In</a>
+                </div>
+                
+            </div>
         </div>
     </nav>
 
