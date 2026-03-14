@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="text-center mb-4 border-bottom pb-4">
+                        <h2 class="fw-bold" style="color: #2c3e50;">📝 Complete Registration</h2>
+                        <p class="text-muted mb-0">You are registering for: <strong class="text-dark">Campus Music Festival</strong></p>
+                    </div>
+
+                    <form action="#" method="POST">
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-muted small mb-1">Name / Student ID</label>
+                            <input type="text" class="form-control rounded-3" value="recent student name" disabled style="background-color: #f8f9fa;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phoneInput" class="form-label fw-bold">Phone Number</label>
+                            <input type="tel" class="form-control form-control-lg rounded-3" id="phoneInput" placeholder="e.g. 07700 900000" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="remarksInput" class="form-label fw-bold">Remarks / Dietary Needs</label>
+                            <textarea class="form-control rounded-3" id="remarksInput" rows="4" placeholder="Any special requirements?"></textarea>
+                        </div>
+
+                        <div class="d-grid gap-3 mt-5">
+                            <button type="button" class="btn btn-dark btn-lg rounded-pill fw-bold" onclick="alert('🎉 Registration Successful!'); window.location.href='{% url 'my_tickets' %}';">
+                                Confirm Registration
+                            </button>
+                            <a href="{% url 'event_detail' %}" class="btn btn-outline-secondary rounded-pill fw-bold py-2">
+                                Cancel & Go Back
+                            </a>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
