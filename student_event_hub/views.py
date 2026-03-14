@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, Http404
 
 # Mock data
 MOCK_EVENTS = [
@@ -52,3 +52,33 @@ def search_events(request):
         filtered_events = MOCK_EVENTS
 
     return JsonResponse({'events': filtered_events})
+
+
+def event_detail(request, event_id):
+    """ Displays the detailed information for a specific event """
+    # Iterate through mock data to find the event matching the ID from the URL
+    event = next((e for e in MOCK_EVENTS if e['id'] == event_id), None)
+
+    # Raise a 404 error if the event is not found
+    if not event:
+        raise Http404("Event does not exist")
+
+    # 2. Pass the retrieved event data to the details template
+    return render(request, 'events_details.html', {'event': event})
+
+
+def event_register(request, event_id):
+    """ Handles the display and submission logic for the registration page """
+    event = next((e for e in MOCK_EVENTS if e['id'] == event_id), None)
+    if not event:
+        raise Http404("Event does not exist")
+
+    # If the user clicks "Confirm Registration" to submit the form (POST request)
+    if request.method == 'POST':
+        # ⚠️ 预留位：未来这里会调用 M5 check_time_conflict 算法
+        # 目前我们先假装报名成功，直接跳转到“My Tickets”页面
+        print(f"Backend log: User is trying to register for event: {event['title']}")
+        return redirect('my_tickets')
+
+    # Default behavior for opening the page (GET request)
+    return render(request, 'event_registration.html', {'event': event})

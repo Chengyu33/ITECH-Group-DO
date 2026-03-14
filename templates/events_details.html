@@ -4,26 +4,26 @@
 <div class="container mt-5 mb-5">
     <div class="row">
         <div class="col-lg-8 mb-4">
-            <img src="https://th.bing.com/th/id/OIP.Q1UImiWqNyOj2V93wdIO6gHaEv?w=307&h=196&c=7&r=0&o=7&pid=1.7&rm=3" class="img-fluid rounded-4 shadow-sm mb-4" alt="event poster" style="width: 100%; height: 450px; object-fit: contain; background-color: #f8f9fa; padding: 10px;">
-            <h1 class="fw-bold mb-3" style="color: #2c3e50;">Campus Music Festival</h1>
-            <span class="badge bg-primary fs-6 mb-4 px-3 py-2 rounded-pill">Music Club</span>
-            
+            <img src="{{ event.image }}" class="img-fluid rounded-4 shadow-sm mb-4" alt="event poster" style="width: 100%; height: 450px; object-fit: contain; background-color: #f8f9fa; padding: 10px;">
+            <h1 class="fw-bold mb-3" style="color: #2c3e50;">{{ event.title }}</h1>
+            <span class="badge bg-primary fs-6 mb-4 px-3 py-2 rounded-pill">{{ event.category }}</span>
+
             <h4 class="fw-bold mt-4 mb-3 border-bottom pb-2">(About this event)</h4>
             <p class="text-muted" style="line-height: 1.8; font-size: 1.1rem;">
-                Craving the stage? Love being live? Join this wild party! From indie bands to pop hits, tonight we dance just for the pure love of music.
+                {{ event.description }}
             </p>
         </div>
 
         <div class="col-lg-4">
             <div class="card border-0 shadow-lg rounded-4 sticky-top" style="top: 20px;">
                 <div class="card-body p-4">
-                    <h5 class="fw-bold mb-4" style="color: #2c3e50;">📍 event information (Event Info)</h5>
-                    <p class="mb-2"><strong>📅 Date:</strong> 2026-03-20 19:00</p>
-                    <p class="mb-4"><strong>🏢 Location:</strong> Main Gate</p>
+                    <h5 class="fw-bold mb-4" style="color: #2c3e50;">📍 Event Info</h5>
+                    <p class="mb-2"><strong>📅 Date:</strong> {{ event.date_time }}</p>
+                    <p class="mb-4"><strong>🏢 Location:</strong> {{ event.location }}</p>
                     <hr>
-                    <h5 class="fw-bold mb-4 text-success">ticket: (Free)</h5>
+                    <h5 class="fw-bold mb-4 text-success">Ticket: (Free)</h5>
                     <div class="d-grid">
-                        <a href="{% url 'event_register' %}" class="btn btn-dark btn-lg rounded-pill fw-bold w-100 text-center">(Join Now)</a>
+                        <a href="{% url 'event_register' event.id %}" class="btn btn-dark btn-lg rounded-pill fw-bold w-100 text-center">(Join Now)</a>
                     </div>
                 </div>
             </div>

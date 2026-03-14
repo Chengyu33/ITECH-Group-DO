@@ -10,14 +10,13 @@
                     
                     <div class="text-center mb-4 border-bottom pb-4">
                         <h2 class="fw-bold" style="color: #2c3e50;">📝 Complete Registration</h2>
-                        <p class="text-muted mb-0">You are registering for: <strong class="text-dark">Campus Music Festival</strong></p>
+                        <p class="text-muted mb-0">You are registering for: <strong class="text-dark">{{ event.title }}</strong></p>
                     </div>
 
-                    <form action="#" method="POST">
-                        
-                        <div class="mb-3">
+                    <form action="" method="POST">
+                        {% csrf_token %} <div class="mb-3">
                             <label class="form-label text-muted small mb-1">Name / Student ID</label>
-                            <input type="text" class="form-control rounded-3" value="recent student name" disabled style="background-color: #f8f9fa;">
+                            <input type="text" class="form-control rounded-3" value="Student Name (Auto)" disabled style="background-color: #f8f9fa;">
                         </div>
 
                         <div class="mb-3">
@@ -31,10 +30,10 @@
                         </div>
 
                         <div class="d-grid gap-3 mt-5">
-                            <button type="button" class="btn btn-dark btn-lg rounded-pill fw-bold" onclick="alert('🎉 Registration Successful!'); window.location.href='{% url 'my_tickets' %}';">
+                            <button type="submit" class="btn btn-dark btn-lg rounded-pill fw-bold">
                                 Confirm Registration
                             </button>
-                            <a href="{% url 'event_detail' %}" class="btn btn-outline-secondary rounded-pill fw-bold py-2">
+                            <a href="{% url 'event_detail' event.id %}" class="btn btn-outline-secondary rounded-pill fw-bold py-2">
                                 Cancel & Go Back
                             </a>
                         </div>
