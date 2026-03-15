@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, Http404
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone 
 from events.models import Event, Registration
+from .services import check_time_conflict 
 
 # M2: Realistic Event List Rendering
 def event_list(request):
@@ -47,6 +49,7 @@ def event_detail(request, event_id):
     """
     event = get_object_or_404(Event, id=event_id)
     return render(request, 'events_details.html', {'event': event})
+
 @login_required
 def event_register(request, event_id):
     """
@@ -66,22 +69,21 @@ def event_register(request, event_id):
         phone_number = request.POST.get('phone', '')
         user_remarks = request.POST.get('remarks', '')
 
-        # Time Conflict Detection
+        # Time Conflict Detection 
         new_start = event.start_time
         new_end = event.end_time
 
         # Retrieve all existing registrations for the current user
         my_existing_regs = Registration.objects.filter(student=request.user).select_related('event')
-        for reg in my_existing_regs:
-            old_start = reg.event.start_time
-            old_end = reg.event.end_time
 
-            if new_start < old_end and new_end > old_start:
-                conflict_message = f"Time Conflict! This overlaps with '{reg.event.title}' ({old_start.strftime('%b %d %H:%M')} - {old_end.strftime('%H:%M')})."
-                return render(request, 'event_registration.html', {
-                    'event': event,
-                    'error_msg': conflict_message
-                })
+        existing_times = [(reg.event.start_time, reg.event.end_time) for reg in my_existing_regs]
+        
+        if check_time_conflict(new_start, new_end, existing_times):
+            conflict_message = "Time Conflict! You have another event overlapping with this time."
+            return render(request, 'event_registration.html', {
+                'event': event,
+                'error_msg': conflict_message
+            })
 
         # Store the registration record in the database
         Registration.objects.get_or_create(
@@ -105,6 +107,28 @@ def create_event(request):
     if not request.user.is_staff:
         # Authorization check: redirect non-staff users to the home page
         return redirect('home')
+        
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        start_time = request.POST.get('start_time')
+        location = request.POST.get('location')
+        image = request.POST.get('image')
+        description = request.POST.get('description')
+
+        Event.objects.create(
+            title=title,
+            start_time=start_time,
+            end_time=start_time,       
+            category='General',        
+            location=location,
+            image=image,
+            description=description,
+            created_at=timezone.now(), 
+            created_by=request.user    
+        )
+        print(f"✅ Success: Event '{title}' created successfully!")
+        return redirect('home')
+
     return render(request, 'create_event.html')
 
 # My Tickets
