@@ -17,13 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.event_list, name='home'),
     path('api/search/', views.search_events, name='search_events'),
-    path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('event/<int:event_id>/', views.event_detail, name='event_detail'),
     path('event/<int:event_id>/register/', views.event_register, name='event_register'),
     path('tickets/', TemplateView.as_view(template_name='my_tickets.html'), name='my_tickets'),

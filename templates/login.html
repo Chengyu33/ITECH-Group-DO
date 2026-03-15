@@ -1,35 +1,32 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <div class="row justify-content-center align-items-center" style="min-height: 75vh;">
-    <div class="col-md-5 col-lg-4"> 
-        
-        <div class="card border-0 shadow-lg rounded-4"> 
-            
-            <div class="card-body p-5"> 
-                
+    <div class="col-md-5 col-lg-4">
+        <div class="card border-0 shadow-lg rounded-4">
+            <div class="card-body p-5">
                 <div class="text-center mb-4">
                     <h3 class="fw-bold" style="color: #2c3e50;">Welcome Back</h3>
                     <p class="text-muted">Sign in to your account</p>
                 </div>
-                
-                <form id="auth-form" method="POST" action="#">
-                    
+
+                {% if form.errors %}
+                <div class="alert alert-danger">Username or password incorrect.</div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control rounded-3" id="emailInput" placeholder="name@example.com">
-                        <label for="emailInput">Email address</label>
+                        <input type="text" class="form-control rounded-3" name="username" id="usernameInput" placeholder="Username" required>
+                        <label for="usernameInput">Username</label>
                     </div>
-                    
                     <div class="form-floating mb-4">
-                        <input type="password" class="form-control rounded-3" id="passwordInput" placeholder="Password">
+                        <input type="password" class="form-control rounded-3" name="password" id="passwordInput" placeholder="Password" required>
                         <label for="passwordInput">Password</label>
                     </div>
-                    
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-dark btn-lg rounded-pill fw-bold">Let's Go!</button>
                     </div>
                 </form>
-                
             </div>
         </div>
     </div>
