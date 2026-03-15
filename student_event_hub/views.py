@@ -139,3 +139,12 @@ def my_tickets(request):
 
     # Pass the registration QuerySet to the 'my_tickets.html' template
     return render(request, 'my_tickets.html', {'registrations': registrations})
+
+# Cancel tickets
+@login_required
+def cancel_ticket(request, registration_id):
+    ticket = get_object_or_404(Registration, id=registration_id, student=request.user)
+    ticket.delete()
+    print(f"Cancelled: User {request.user.username} cancelled their ticket for {ticket.event.title}")
+
+    return redirect('my_tickets')

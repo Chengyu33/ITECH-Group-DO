@@ -19,7 +19,7 @@
                         <p style="color: green;"><b>[ Confirmed ]</b></p>
                         <p>Time: {{ reg.event.start_time }}</p>
                         <p>Location: {{ reg.event.location }}</p>
-                        <form action="/cancel-ticket/{{ reg.id }}/" method="POST" style="display:inline;">
+                        <form action="{% url 'cancel_ticket' reg.id %}" method="POST" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this ticket?');">
                                 Cancel Ticket
