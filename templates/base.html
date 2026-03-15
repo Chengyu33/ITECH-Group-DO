@@ -28,16 +28,19 @@
                     <a class="nav-link" href="{% url 'my_tickets' %}">My Tickets</a>
                 </li>
                 {% if user.is_staff %}
-                <li class="nav-item">
-                    <a class="nav-link text-warning" href="{% url 'create_event' %}">⚙️ Create Event</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="{% url 'create_event' %}">⚙️ Create Event</a>
+                    </li>
                 {% endif %}
             </ul>
 
             <div class="d-flex align-items-center gap-2">
                 {% if user.is_authenticated %}
                     <span class="text-white">👤 {{ user.username }}</span>
-                    <a href="{% url 'logout' %}" class="btn btn-outline-light rounded-pill fw-bold">Sign Out</a>
+                    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light rounded-pill fw-bold">Sign Out</button>
+                    </form>
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-primary rounded-pill fw-bold">Sign In</a>
                 {% endif %}
