@@ -55,18 +55,40 @@ def event_register(request, event_id):
     """
     event = get_object_or_404(Event, id=event_id)
 
+    if Registration.objects.filter(student=request.user, event=event).exists():
+        return render(request, 'event_registration.html', {
+            'event': event,
+            'error_msg': 'You have already registered for this event!'
+        })
+
     if request.method == 'POST':
         # Capture form data submitted by the user
         phone_number = request.POST.get('phone', '')
         user_remarks = request.POST.get('remarks', '')
 
-        # 预留位：M5 防冲突算法
+        # Time Conflict Detection
+        new_start = event.start_time
+        new_end = event.end_time
+
+        # Retrieve all existing registrations for the current user
+        my_existing_regs = Registration.objects.filter(student=request.user).select_related('event')
+        for reg in my_existing_regs:
+            old_start = reg.event.start_time
+            old_end = reg.event.end_time
+
+            if new_start < old_end and new_end > old_start:
+                conflict_message = f"Time Conflict! This overlaps with '{reg.event.title}' ({old_start.strftime('%b %d %H:%M')} - {old_end.strftime('%H:%M')})."
+                return render(request, 'event_registration.html', {
+                    'event': event,
+                    'error_msg': conflict_message
+                })
 
         # Store the registration record in the database
         Registration.objects.get_or_create(
             student=request.user,
             event=event,
-            defaults={'phone': phone_number, 'remarks': user_remarks}
+            phone=phone_number,
+            remarks=user_remarks
         )
         print(f"✅ Success: User {request.user.username} registered for {event.title}!")
         return redirect('my_tickets')
