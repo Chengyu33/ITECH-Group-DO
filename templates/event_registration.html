@@ -12,7 +12,11 @@
                         <h2 class="fw-bold" style="color: #2c3e50;">📝 Complete Registration</h2>
                         <p class="text-muted mb-0">You are registering for: <strong class="text-dark">{{ event.title }}</strong></p>
                     </div>
-
+                    {% if error_msg %}
+                        <div class="alert alert-danger fw-bold text-center mb-4 shadow-sm" role="alert">
+                            {{ error_msg }}
+                        </div>
+                    {% endif %}
                     <form action="" method="POST">
                         {% csrf_token %} 
                         <div class="mb-3">
