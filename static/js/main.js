@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Initiate AJAX request to fetch filtered data from backend
             fetch(`/api/search/?q=${encodeURIComponent(query)}`)
-                .then(response => response.json()) // 把后端返回的数据转换成 JSON 格式
+                .then(response => response.json())
                 .then(data => {
                     // Clear existing event cards from the container
                     eventContainer.innerHTML = "";
@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Iterate through results and dynamically inject HTML cards
                     data.events.forEach(event => {
-                        // 这里的 HTML 结构必须和 Xiangyu 在 Events.html 里写的一模一样
                         const cardHtml = `
                             <div class="col">
                                 <div class="card h-100 border-0 shadow-sm rounded-4">

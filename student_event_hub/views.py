@@ -148,3 +148,42 @@ def cancel_ticket(request, registration_id):
     print(f"Cancelled: User {request.user.username} cancelled their ticket for {ticket.event.title}")
 
     return redirect('my_tickets')
+
+# Edit event
+@login_required
+def edit_event(request, event_id):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == 'POST':
+        # Update event attributes by overwriting fields with submitted form data
+        event.title = request.POST.get('title')
+        event.description = request.POST.get('description')
+        event.location = request.POST.get('location')
+        event.start_time = request.POST.get('start_time')
+        event.end_time = request.POST.get('end_time')
+        event.category = request.POST.get('category', 'General')
+        event.image = request.POST.get('image', '')
+
+        event.save()
+        print(f"Success: Admin edited event '{event.title}'")
+        return redirect('event_detail', event_id=event.id)
+
+    return render(request, 'edit_event.html', {'event': event})
+
+# Delete event
+@login_required
+def delete_event(request, event_id):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == 'POST':
+        event_title = event.title
+        event.delete()
+        print(f"Success: Admin deleted event '{event_title}'")
+
+    return redirect('home')

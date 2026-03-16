@@ -32,6 +32,34 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill fw-bold w-100">Cancel / Delete Event</button></form>
                     </div>
+                    <hr class="text-muted mt-4">
+                    <h6 class="fw-bold text-info mb-3">📋 Registration List ({{ event.registration_set.count }})</h6>
+
+                    {% if event.registration_set.exists %}
+                        <div class="list-group mb-3" style="max-height: 250px; overflow-y: auto;">
+                            {% for reg in event.registration_set.all %}
+                            <div class="list-group-item list-group-item-action flex-column align-items-start border-1 mb-2 rounded-3" style="background-color: #ffffff;">
+                                <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold text-dark">
+                                        👤 {% if reg.student.get_full_name %}{{ reg.student.get_full_name }} ({{ reg.student.username }}){% else %}{{ reg.student.username }}{% endif %}
+                                    </h6>
+                                    <small class="text-muted">{{ reg.registered_at|date:"m-d H:i" }}</small>
+                                </div>
+                                <div class="small text-muted">
+                                    <strong>ID:</strong> {{ reg.student.student.student_id|default:"N/A" }}<br>
+                                    <strong>Phone:</strong> {{ reg.phone|default:"No phone provided" }}<br>
+                                    {% if reg.remarks %}
+                                        <strong>Remarks:</strong> {{ reg.remarks }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-light border-0 py-2 text-center text-muted small rounded-3">
+                            No one has registered for this event yet.
+                        </div>
+                    {% endif %}
                 </div>
                 <hr>
                {% endif %}

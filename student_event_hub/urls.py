@@ -32,4 +32,6 @@ urlpatterns = [
     path('ticket/<int:registration_id>/cancel/', views.cancel_ticket, name='cancel_ticket'),
     path('create/', views.create_event, name='create_event'),
     path('register/', TemplateView.as_view(template_name='event_registration.html'), name='event_register'),
+    path('event/<int:event_id>/edit/', views.edit_event, name='edit_event'),
+    path('event/<int:event_id>/delete/', views.delete_event, name='delete_event'),
 ]
