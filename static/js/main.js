@@ -3,28 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Find the form we named in login.html (id="auth-form")
     const authForm = document.getElementById("auth-form");
-
-    // Check if the current page actually has this form (because this JS also loads on the homepage)
-    if (authForm) {
-        authForm.addEventListener("submit", function(event) {
-            
-            // Extract the text entered by the user in the email and password fields
-            const emailValue = document.getElementById("emailInput").value.trim();
-            const passwordValue = document.getElementById("passwordInput").value.trim();
-
-            // If the email is empty, or the password is empty
-            if (emailValue === "" || passwordValue === "") {
-                event.preventDefault(); 
-                alert("Please fill in the complete email and password!");
-            } 
-            else {
-                // After Yonghui has set up the backend database, we will delete the following two lines so that it can submit normally.
-                event.preventDefault();
-                alert("Frontend validation passed, ready to call the backend server");
-            }
-        });
-    }
-
+    
     // Dynamic Search Interaction
     const searchInput = document.getElementById("searchInput");
     const eventContainer = document.getElementById("eventContainer");
@@ -57,14 +36,17 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <img src="${event.image}" class="card-img-top rounded-top-4" alt="Event Poster" style="height: 200px; object-fit: cover;">
                                     
                                     <div class="card-body">
+                                        <span class="badge bg-primary mb-2">${event.category || 'General'}</span>
+    
                                         <h5 class="card-title fw-bold">${event.title}</h5>
                                         <p class="card-text text-muted mb-1">📅 Time：${event.date_time}</p>
                                         <p class="card-text text-muted">📍 Location：${event.location}</p>
+                                        <p class="card-text text-primary fw-bold mb-2">👥 Registered: ${event.registered_count || 0} / 50 (Capacity)</p>
                                         <p class="card-text mt-2">${event.description}</p>
                                     </div>
                                     
                                     <div class="card-footer bg-white border-0 pb-3 pt-0">
-                                        <a href="#" class="btn btn-outline-dark w-100 rounded-pill fw-bold">View Details / Register</a>
+                                        <a href="/event/${event.id}/" class="btn btn-outline-dark w-100 rounded-pill fw-bold">View Details / Register</a>
                                     </div>
                                 </div>
                             </div>

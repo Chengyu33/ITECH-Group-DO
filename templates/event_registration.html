@@ -14,10 +14,16 @@
                     </div>
 
                     <form action="" method="POST">
-                        {% csrf_token %} <div class="mb-3">
-                            <label class="form-label text-muted small mb-1">Name / Student ID</label>
-                            <input type="text" class="form-control rounded-3" value="Student Name (Auto)" disabled style="background-color: #f8f9fa;">
-                        </div>
+                        {% csrf_token %} 
+                        <div class="mb-3">
+                        <label for="nameInput" class="form-label fw-bold">Full Name</label>
+                        <input type="text" name="student_name" class="form-control form-control-lg rounded-3" id="nameInput" value="{{ user.get_full_name }}" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="studentIdInput" class="form-label fw-bold">Student ID</label>
+                        <input type="text" name="student_id" class="form-control form-control-lg rounded-3" id="studentIdInput" placeholder="e.g. 2345678" required>
+                    </div>
 
                         <div class="mb-3">
                             <label for="phoneInput" class="form-label fw-bold">Phone Number</label>
