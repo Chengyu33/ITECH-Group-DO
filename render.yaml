@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: student-event-hub
+    env: python
+    buildCommand: >
+      pip install -r requirements.txt &&
+      python manage.py migrate &&
+      python manage.py loaddata initial_data.json &&
+      python manage.py collectstatic --noinput
+    startCommand: "gunicorn student_event_hub.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
