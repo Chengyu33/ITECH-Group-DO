@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <div class="card-body">
                                         <span class="badge bg-primary mb-2">${event.category || 'General'}</span>
     
-                                        <h5 class="card-title fw-bold">${event.title}</h5>
+                                        <h3 class="h5 card-title fw-bold">${event.title}</h3>
                                         <p class="card-text text-muted mb-1">📅 Time：${event.date_time}</p>
                                         <p class="card-text text-muted">📍 Location：${event.location}</p>
                                         <p class="card-text text-primary fw-bold mb-2">👥 Registered: ${event.registered_count || 0} / 50 (Capacity)</p>
@@ -45,8 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                     </div>
                                     
                                     <div class="card-footer bg-white border-0 pb-3 pt-0">
-                                        <a href="/event/${event.id}/" class="btn btn-outline-dark w-100 rounded-pill fw-bold">View Details / Register</a>
-                                    </div>
+                                        <a href="/event/${event.id}/" class="btn btn-outline-dark w-100 rounded-pill fw-bold" aria-label="View details for ${event.title}">View Details / Register</a>
                                 </div>
                             </div>
                         `;
