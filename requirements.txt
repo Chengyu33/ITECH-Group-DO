@@ -3,3 +3,5 @@ Django
 packaging
 pillow
 sqlparse
+gunicorn
+whitenoise
