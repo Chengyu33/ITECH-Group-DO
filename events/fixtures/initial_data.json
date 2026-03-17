@@ -1,5 +1,67 @@
 [
   {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "email": "wang@school.edu",
+      "password": "pbkdf2_sha256$1200000$MApz8t9zquDo5wfLbpOp0H$D7bv+j3p0qYM5anteGfY04vB5pOeCT6HxNskeMB9rmc=",
+      "is_staff": true,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "student1",
+      "email": "li@school.edu",
+      "password": "pbkdf2_sha256$1200000$D1z4I3xpU266mMsavRMCGJ$fB+yQK+s3Lf4vbpkgUl4YNzpttWgasF8Xa0gjYotZ44=",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "student2",
+      "email": "zhang@school.edu",
+      "password": "pbkdf2_sha256$1200000$D1z4I3xpU266mMsavRMCGJ$fB+yQK+s3Lf4vbpkgUl4YNzpttWgasF8Xa0gjYotZ44=",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "events.administrator",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "department": "Student Affairs Office"
+    }
+  },
+  {
+    "model": "events.student",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "student_id": "2024001",
+      "phone": "07700900001"
+    }
+  },
+  {
+    "model": "events.student",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "student_id": "2024002",
+      "phone": "07700900002"
+    }
+  },
+  {
     "model": "events.event",
     "pk": 1,
     "fields": {
