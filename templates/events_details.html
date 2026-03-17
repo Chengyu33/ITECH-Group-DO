@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <img src="{{ event.image }}" class="img-fluid rounded-4 shadow-sm mb-4" alt="event poster" style="width: 100%; height: 450px; object-fit: contain; background-color: #f8f9fa; padding: 10px;">
+            <h1 class="fw-bold mb-3" style="color: #2c3e50;">{{ event.title }}</h1>
+            <span class="badge bg-primary fs-6 mb-4 px-3 py-2 rounded-pill">{{ event.category }}</span>
+
+            <h4 class="fw-bold mt-4 mb-3 border-bottom pb-2">(About this event)</h4>
+            <p class="text-muted" style="line-height: 1.8; font-size: 1.1rem;">
+                {{ event.description }}
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-lg rounded-4 sticky-top" style="top: 20px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4" style="color: #2c3e50;">📍 Event Info</h5>
+                    <p class="mb-2"><strong>📅 Time:</strong><br>{{ event.start_time }} - {{ event.end_time }}</p>
+                    <p class="mb-4"><strong>🏢 Location:</strong> {{ event.location }}</p>
+                    <p class="mb-4 text-primary"><strong>👥 Capacity:</strong> {{ event.registration_set.count }} / 50 Registered</p>
+                    <hr>
+                    <h5 class="fw-bold mb-4 text-success">Ticket: (Free)</h5>
+                {% if user.is_staff %}
+                <div class="admin-controls mb-4 p-3 border border-warning rounded-3 bg-light">
+                    <h6 class="fw-bold text-warning mb-3">🛠️ Admin Dashboard</h6>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'edit_event' event.id %}" class="btn btn-outline-primary btn-sm rounded-pill fw-bold">Edit Event Details</a>
+            
+                    <form action="{% url 'delete_event' event.id %}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this event?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill fw-bold w-100">Cancel / Delete Event</button></form>
+                    </div>
+                    <hr class="text-muted mt-4">
+                    <h6 class="fw-bold text-info mb-3">📋 Registration List ({{ event.registration_set.count }})</h6>
+
+                    {% if event.registration_set.exists %}
+                        <div class="list-group mb-3" style="max-height: 250px; overflow-y: auto;">
+                            {% for reg in event.registration_set.all %}
+                            <div class="list-group-item list-group-item-action flex-column align-items-start border-1 mb-2 rounded-3" style="background-color: #ffffff;">
+                                <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold text-dark">
+                                        👤 {% if reg.student.get_full_name %}{{ reg.student.get_full_name }} ({{ reg.student.username }}){% else %}{{ reg.student.username }}{% endif %}
+                                    </h6>
+                                    <small class="text-muted">{{ reg.registered_at|date:"m-d H:i" }}</small>
+                                </div>
+                                <div class="small text-muted">
+                                    <strong>ID:</strong> {{ reg.student.student.student_id|default:"N/A" }}<br>
+                                    <strong>Phone:</strong> {{ reg.phone|default:"No phone provided" }}<br>
+                                    {% if reg.remarks %}
+                                        <strong>Remarks:</strong> {{ reg.remarks }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-light border-0 py-2 text-center text-muted small rounded-3">
+                            No one has registered for this event yet.
+                        </div>
+                    {% endif %}
+                </div>
+                <hr>
+               {% endif %}
+                    <div class="d-grid">
+                        <a href="{% url 'event_register' event.id %}" class="btn btn-dark btn-lg rounded-pill fw-bold w-100 text-center">(Join Now)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

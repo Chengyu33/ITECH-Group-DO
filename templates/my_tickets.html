@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <h1 style="color: darkblue;">My Tickets</h1>
+        <p>You have {{ registrations|length }} upcoming event(s).</p>
+        <hr>
+
+        {% for reg in registrations %}
+        <div class="ticket-box" style="border: 2px solid #999999; padding: 15px; margin-top: 20px; background-color: #f8f9fa; border-radius: 15px;">
+            <table>
+                <tr>
+                    <td>
+                        <img src="{{ reg.event.image }}" style="width: 250px; border-radius: 8px;">
+                    </td>
+                    <td style="padding-left: 20px;">
+                        <h3>{{ reg.event.title }}</h3>
+                        <p style="color: green;"><b>[ Confirmed ]</b></p>
+                        <p>Time: {{ reg.event.start_time }}</p>
+                        <p>Location: {{ reg.event.location }}</p>
+                        <form action="{% url 'cancel_ticket' reg.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this ticket?');">
+                                Cancel Ticket
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {% endfor %}  
+        
+        <br><br><br>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        
+        <div class="form-box">
+            <h2 style="color: darkred;">🛠️ Create New Event (Admin Only)</h2>
+            <hr>
+
+            <form action="#" method="POST">
+                {% csrf_token %}
+                
+                <label for="titleInput" class="fw-bold">Event Title:</label><br>
+                <input type="text" id="titleInput" name="title" class="form-control mb-3" placeholder="e.g., Campus Music Festival" required>
+
+                <label for="timeInput" class="fw-bold">Date & Time:</label><br>
+                <input type="datetime-local" id="timeInput" name="start_time" class="form-control mb-3" required>
+
+                <label for="locationInput" class="fw-bold">Location:</label><br>
+                <input type="text" id="locationInput" name="location" class="form-control mb-3" placeholder="e.g., Main Hall" required>
+
+                <label for="imageInput" class="fw-bold">Poster Image URL:</label><br>
+                <input type="text" id="imageInput" name="image" class="form-control" placeholder="https://example.com/image.jpg" required>
+                <p class="text-muted small mb-3">Paste the link to the event poster image.</p>
+                
+                <label for="descInput" class="fw-bold">Description:</label><br>
+                <textarea id="descInput" name="description" class="form-control mb-4" rows="5" required></textarea>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark btn-lg" style="width: 200px;">
+                        Publish Event
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+
+    </div>
+{% endblock %}

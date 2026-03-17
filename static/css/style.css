@@ -1,0 +1,10 @@
+body {
+    background-color: #F0F4F8; 
+}
+.navbar {
+    border-bottom: 3px solid #2C3E50; 
+}
+.form-control:focus {
+    border-color: #2C3E50; 
+    box-shadow: none; 
+}

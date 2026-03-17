@@ -16,7 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
+from events import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.event_list, name='home'),
+    path('api/search/', views.search_events, name='search_events'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('event/<int:event_id>/', views.event_detail, name='event_detail'),
+    path('event/<int:event_id>/register/', views.event_register, name='event_register'),
+    path('tickets/', views.my_tickets, name='my_tickets'),
+    path('ticket/<int:registration_id>/cancel/', views.cancel_ticket, name='cancel_ticket'),
+    path('create/', views.create_event, name='create_event'),
+    path('register/', TemplateView.as_view(template_name='event_registration.html'), name='event_register'),
+    path('event/<int:event_id>/edit/', views.edit_event, name='edit_event'),
+    path('event/<int:event_id>/delete/', views.delete_event, name='delete_event'),
 ]
